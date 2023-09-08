@@ -9,7 +9,7 @@ class Emitter extends EventEmitter { };
 // initialize object 
 const myEmitter = new Emitter();
 myEmitter.on('log', (msg, fileName) => logEvents(msg, fileName));
-const PORT = process.env.PORT || 3600;
+const PORT = process.env.PORT || 3500;
 
 const serveFile = async (filePath, contentType, response) => {
     try {
@@ -69,17 +69,17 @@ const server = http.createServer((req, res) => {
 //if else tree
     let filePath =
         contentType === 'text/html' && req.url === '/'
-            ? path.join(__dirname, 'views', 'index.html')
-            : contentType === 'text/html' && req.url.slice(-1) === '/'
+            ? path.join(__dirname, 'views', 'index.html') //index.html
+            : contentType === 'text/html' && req.url.slice(-1) === '/' //last character is /, views directory +url and index.html
                 ? path.join(__dirname, 'views', req.url, 'index.html')
                 : contentType === 'text/html'
-                    ? path.join(__dirname, 'views', req.url)
+                    ? path.join(__dirname, 'views', req.url) //requested url in views
                     : path.join(__dirname, req.url);
 
     // makes .html extension not required in the browser
     if (!extension && req.url.slice(-1) !== '/') filePath += '.html';
 
-    const fileExists = fs.existsSync(filePath);
+    const fileExists = fs.existsSync(filePath); //is used to check whether a file exists at the specified filePath.
 
     if (fileExists) {
         serveFile(filePath, contentType, res);
