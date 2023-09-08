@@ -1,0 +1,34 @@
+The response.writeHead() (Added in v1..0) property is an inbuilt property of the ‘http’ module which sends a response header to the request.
+ The status code is a 3-digit HTTP status code, like 404. The last argument, headers, are the response headers. 
+ Optionally one can give a human-readable statusMessage as the second argument.
+
+ 
+ Ststus code 200:request was succesful(ok)
+// Node.js program to demonstrate the 
+// response.writeHead() Method
+  
+// Importing http module
+var http = require('http');
+  
+// Setting up PORT
+const PORT = process.env.PORT || 3000;
+  
+// Creating http Server
+var httpServer = http.createServer(
+        function(request, response){
+  
+  const body = 'hello world';
+    
+  // Calling response.writeHead method
+  response.writeHead(200, {
+    'Content-Length': Buffer.byteLength(body),
+    'Content-Type': 'text/plain'
+  });
+    
+  response.end(body);
+});
+  
+// Listening to http Server
+httpServer.listen(PORT, () => {
+   console.log("Server is running at port 3000...");
+});
